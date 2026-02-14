@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.dbassist.dbassist.HomeController"
+            styleClass="root"
+            prefWidth="900.0" prefHeight="600.0">
+
+    <style>
+        -fx-background-color: #f5f7fa;
+    </style>
+
+    <!-- Custom Title Bar -->
+    <top>
+        <VBox spacing="0">
+            <!-- Window Control Bar -->
+            <HBox fx:id="titleBar" alignment="CENTER_LEFT" spacing="15.0"
+                  style="-fx-background-color: linear-gradient(to right, #1a252f, #2c3e50); -fx-padding: 8 15 8 15; -fx-cursor: hand;">
+
+                <!-- App Icon and Title -->
+                <HBox fx:id="iconContainer" alignment="CENTER_LEFT" spacing="10">
+                    <!-- FontAwesome icon will be added here programmatically -->
+                    <Label text="DBAssist" textFill="white" styleClass="app-title">
+                        <font>
+                            <Font name="System Bold" size="16.0"/>
+                        </font>
+                    </Label>
+                </HBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- Window Control Buttons -->
+                <HBox spacing="0" alignment="CENTER_RIGHT">
+                    <Button fx:id="minimizeButton" text="−" onAction="#onMinimize"
+                            styleClass="window-button"
+                            style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 20px; -fx-cursor: hand; -fx-padding: 5 15 5 15;">
+                    </Button>
+                    <Button fx:id="maximizeButton" text="□" onAction="#onMaximize"
+                            styleClass="window-button"
+                            style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px; -fx-cursor: hand; -fx-padding: 5 15 5 15;">
+                    </Button>
+                    <Button fx:id="closeButton" text="✕" onAction="#onClose"
+                            styleClass="window-button-close"
+                            style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 18px; -fx-cursor: hand; -fx-padding: 5 15 5 15;">
+                    </Button>
+                </HBox>
+            </HBox>
+
+            <!-- App Info Bar -->
+            <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #2c3e50; -fx-padding: 12 15 12 15;">
+                <Label text="Your AI-Powered Database Assistant" textFill="#ecf0f1" styleClass="app-subtitle">
+                    <font>
+                        <Font size="12.0"/>
+                    </font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Settings" onAction="#onSettings" styleClass="header-button"
+                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand; -fx-font-size: 12px; -fx-padding: 5 12 5 12;"/>
+                <Button text="About" onAction="#onAbout" styleClass="header-button"
+                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand; -fx-font-size: 12px; -fx-padding: 5 12 5 12;"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Main Content Area with Left Panel -->
+    <center>
+        <SplitPane dividerPositions="0.2" style="-fx-background-color: #f5f7fa;">
+
+            <!-- Left Panel - Connection Tree -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-width: 0 1 0 0;"
+                  minWidth="250.0" prefWidth="250.0" maxWidth="350.0">
+                <!-- Left Panel Header -->
+                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #34495e; -fx-padding: 12 15;">
+                    <Label text="Connections" textFill="white" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="+" onAction="#onNewConnection"
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 16px; -fx-cursor: hand; -fx-background-radius: 3; -fx-padding: 2 8;">
+                    </Button>
+                </HBox>
+
+                <!-- Search Filter for Tables -->
+                <TextField fx:id="treeSearchField" promptText="🔍 Search tables..."
+                           style="-fx-font-size: 12px; -fx-padding: 8; -fx-background-color: #ecf0f1; -fx-border-width: 0 0 1 0; -fx-border-color: #bdc3c7;">
+                    <VBox.margin>
+                        <Insets top="0" bottom="0" left="0" right="0"/>
+                    </VBox.margin>
+                </TextField>
+
+                <!-- Connection Tree -->
+                <TreeView fx:id="connectionTree" VBox.vgrow="ALWAYS"
+                          style="-fx-background-color: white; -fx-border-width: 0;">
+                </TreeView>
+            </VBox>
+
+            <!-- Right Panel - TabPane for Home and Data Tabs -->
+            <TabPane fx:id="mainTabPane" style="-fx-background-color: #f5f7fa;" tabClosingPolicy="SELECTED_TAB">
+
+                <!-- Home Tab (Non-closable) -->
+                <Tab text="Home" fx:id="homeTab" closable="false">
+                    <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: #f5f7fa; -fx-border-width: 0;">
+                        <VBox fx:id="mainContainer" alignment="TOP_CENTER" spacing="35.0" style="-fx-background-color: #f5f7fa;">
+                            <padding>
+                                <Insets top="50.0" bottom="40.0" left="30.0" right="30.0"/>
+                            </padding>
+
+                    <!-- Welcome Section -->
+                    <VBox alignment="CENTER" spacing="12.0">
+                        <Label fx:id="titleLabel" text="Welcome to DBAssist" styleClass="title">
+                            <font>
+                                <Font name="System Bold" size="36.0"/>
+                            </font>
+                            <style>
+                                -fx-text-fill: #2c3e50;
+                            </style>
+                        </Label>
+                        <Label fx:id="subtitleLabel"
+                               text="AI-powered database explorer supporting MySQL, PostgreSQL, MongoDB, and more"
+                               styleClass="subtitle" wrapText="true" textAlignment="CENTER" maxWidth="650.0">
+                            <font>
+                                <Font size="15.0"/>
+                            </font>
+                            <style>
+                                -fx-text-fill: #7f8c8d;
+                            </style>
+                        </Label>
+                    </VBox>
+
+                    <!-- Action Cards Row 1 -->
+                    <HBox spacing="25.0" alignment="CENTER">
+                        <!-- New Connection Card -->
+                        <VBox alignment="CENTER" spacing="15.0" styleClass="action-card"
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-padding: 30;"
+                              prefWidth="340.0" prefHeight="200.0">
+                            <Label text="🔌" style="-fx-font-size: 52px;"/>
+                            <Label text="New Connection" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                            <Label text="Connect to a new database" wrapText="true" textAlignment="CENTER"
+                                   style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" maxWidth="280.0"/>
+                            <Button fx:id="newConnectionButton" text="Get Started" onAction="#onNewConnection"
+                                    prefWidth="150.0"
+                                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand; -fx-background-radius: 5; -fx-padding: 10 20;">
+                            </Button>
+                        </VBox>
+
+                        <!-- Recent Connections Card -->
+                        <VBox alignment="CENTER" spacing="15.0" styleClass="action-card"
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-padding: 30;"
+                              prefWidth="340.0" prefHeight="200.0">
+                            <Label text="📚" style="-fx-font-size: 52px;"/>
+                            <Label text="Recent Connections" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                            <Label text="Access your saved connections" wrapText="true" textAlignment="CENTER"
+                                   style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" maxWidth="280.0"/>
+                            <Button fx:id="recentConnectionsButton" text="View History" onAction="#onRecentConnections"
+                                    prefWidth="150.0"
+                                    style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand; -fx-background-radius: 5; -fx-padding: 10 20;">
+                            </Button>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Action Cards Row 2 -->
+                    <HBox spacing="25.0" alignment="CENTER">
+                        <!-- AI Assistant Card -->
+                        <VBox alignment="CENTER" spacing="15.0" styleClass="action-card"
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-padding: 30;"
+                              prefWidth="340.0" prefHeight="200.0">
+                            <Label text="🤖" style="-fx-font-size: 52px;"/>
+                            <Label text="AI Assistant" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                            <Label text="Let AI help you query databases" wrapText="true" textAlignment="CENTER"
+                                   style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" maxWidth="280.0"/>
+                            <Button text="Coming Soon" disable="true" prefWidth="150.0"
+                                    style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5; -fx-padding: 10 20;">
+                            </Button>
+                        </VBox>
+
+                        <!-- Documentation Card -->
+                        <VBox alignment="CENTER" spacing="15.0" styleClass="action-card"
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-padding: 30;"
+                              prefWidth="340.0" prefHeight="200.0">
+                            <Label text="📖" style="-fx-font-size: 52px;"/>
+                            <Label text="Documentation" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                            <Label text="Learn how to use DBAssist" wrapText="true" textAlignment="CENTER"
+                                   style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" maxWidth="280.0"/>
+                            <Button text="Learn More" prefWidth="150.0"
+                                    style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand; -fx-background-radius: 5; -fx-padding: 10 20;">
+                            </Button>
+                        </VBox>
+                    </HBox>
+
+                        </VBox>
+                    </ScrollPane>
+                </Tab>
+
+                <!-- Data tabs will be added dynamically here -->
+
+            </TabPane>
+        </SplitPane>
+    </center>
+
+    <!-- Footer -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #ecf0f1; -fx-padding: 15;">
+            <Label text="DBAssist v1.0.0" style="-fx-text-fill: #7f8c8d; -fx-font-size: 11px;"/>
+            <Label text="•" style="-fx-text-fill: #7f8c8d;"/>
+            <Label text="Supports: MySQL, PostgreSQL, MongoDB, Oracle, SQL Server"
+                   style="-fx-text-fill: #7f8c8d; -fx-font-size: 11px;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
+

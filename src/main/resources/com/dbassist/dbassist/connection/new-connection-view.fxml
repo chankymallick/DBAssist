@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.dbassist.dbassist.connection.NewConnectionController"
+            prefWidth="600.0" prefHeight="550.0"
+            style="-fx-background-color: #f5f7fa;">
+
+    <!-- Header -->
+    <top>
+        <VBox style="-fx-background-color: #2c3e50; -fx-padding: 20;">
+            <Label text="New Database Connection" textFill="white" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+            <Label text="Configure connection to SQL Server or Oracle database" textFill="#ecf0f1" style="-fx-font-size: 13px;">
+                <VBox.margin>
+                    <Insets top="5"/>
+                </VBox.margin>
+            </Label>
+        </VBox>
+    </top>
+
+    <!-- Form Content -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: transparent; -fx-border-width: 0;">
+            <VBox spacing="20" style="-fx-background-color: #f5f7fa;">
+                <padding>
+                    <Insets top="25" right="30" bottom="25" left="30"/>
+                </padding>
+
+                <!-- Connection Name -->
+                <VBox spacing="8">
+                    <Label text="Connection Name *" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    <TextField fx:id="connectionNameField" promptText="My Database Connection"
+                               style="-fx-font-size: 13px; -fx-padding: 10; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #dfe6e9;"/>
+                </VBox>
+
+                <!-- Database Type -->
+                <VBox spacing="8">
+                    <Label text="Database Type *" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    <ComboBox fx:id="databaseTypeCombo" prefWidth="Infinity" maxWidth="Infinity"
+                              style="-fx-font-size: 13px; -fx-padding: 8;"/>
+                </VBox>
+
+                <!-- Connection Details Section -->
+                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e0e0e0; -fx-border-width: 1;">
+                    <Label text="Connection Details" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
+
+                    <!-- Host and Port -->
+                    <HBox spacing="15">
+                        <VBox spacing="8" HBox.hgrow="ALWAYS">
+                            <Label text="Host *" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                            <TextField fx:id="hostField" promptText="localhost or IP address"
+                                       style="-fx-font-size: 13px; -fx-padding: 10; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #dfe6e9;"/>
+                        </VBox>
+                        <VBox spacing="8" prefWidth="120">
+                            <Label text="Port *" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                            <TextField fx:id="portField" promptText="1433"
+                                       style="-fx-font-size: 13px; -fx-padding: 10; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #dfe6e9;"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Database Name -->
+                    <VBox spacing="8">
+                        <Label text="Database Name / SID" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                        <TextField fx:id="databaseNameField" promptText="Database name or Oracle SID"
+                                   style="-fx-font-size: 13px; -fx-padding: 10; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #dfe6e9;"/>
+                    </VBox>
+                </VBox>
+
+                <!-- Authentication Section -->
+                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e0e0e0; -fx-border-width: 1;">
+                    <Label text="Authentication" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
+
+                    <!-- Username -->
+                    <VBox spacing="8">
+                        <Label text="Username *" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                        <TextField fx:id="usernameField" promptText="Enter username"
+                                   style="-fx-font-size: 13px; -fx-padding: 10; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #dfe6e9;"/>
+                    </VBox>
+
+                    <!-- Password -->
+                    <VBox spacing="8">
+                        <Label text="Password" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                        <PasswordField fx:id="passwordField" promptText="Enter password"
+                                       style="-fx-font-size: 13px; -fx-padding: 10; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #dfe6e9;"/>
+                    </VBox>
+
+                    <!-- Save Password Checkbox -->
+                    <CheckBox fx:id="savePasswordCheckbox" text="Save password (stored securely)"
+                              style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+                </VBox>
+
+                <!-- Status Label -->
+                <Label fx:id="statusLabel" text="" style="-fx-font-size: 12px; -fx-font-weight: bold;" wrapText="true"/>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <!-- Footer with Buttons -->
+    <bottom>
+        <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #e0e0e0; -fx-border-width: 1 0 0 0;">
+            <Button fx:id="testConnectionButton" text="Test Connection" onAction="#handleTestConnection"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 5;"
+                    disable="true"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="cancelButton" text="Cancel" onAction="#handleCancel"
+                    style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 5;"/>
+            <Button fx:id="saveButton" text="Save Connection" onAction="#handleSave"
+                    style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 5;"
+                    disable="true"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
+
