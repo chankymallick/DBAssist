@@ -218,5 +218,25 @@ public class NewConnectionController {
         connectionNameField.selectAll();
         connectionNameField.requestFocus();
     }
+
+    /**
+     * Set connection to edit - pre-fills form with existing values for editing
+     */
+    public void setConnectionToEdit(DatabaseConnection existingConnection) {
+        this.connectionToClone = existingConnection; // Use same field to allow name validation
+
+        // Pre-fill form with existing values
+        connectionNameField.setText(existingConnection.getConnectionName());
+        databaseTypeCombo.setValue(existingConnection.getDatabaseType());
+        hostField.setText(existingConnection.getHost());
+        portField.setText(existingConnection.getPort());
+        databaseNameField.setText(existingConnection.getDatabaseName());
+        usernameField.setText(existingConnection.getUsername());
+        passwordField.setText(existingConnection.getPassword());
+        savePasswordCheckbox.setSelected(existingConnection.isSavePassword());
+
+        // Focus on the first field
+        hostField.requestFocus();
+    }
 }
 

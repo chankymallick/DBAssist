@@ -7,6 +7,10 @@ module com.dbassist.dbassist {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome5;
     requires java.sql;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
+    requires java.desktop;
+    requires org.fxmisc.richtext;
 
     opens com.dbassist.dbassist to javafx.fxml;
     opens com.dbassist.dbassist.connection to javafx.fxml;

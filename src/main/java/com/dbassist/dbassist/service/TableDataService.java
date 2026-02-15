@@ -79,7 +79,8 @@ public class TableDataService {
     /**
      * Build SELECT query with filters
      */
-    private static String buildSelectQuery(String tableName, Map<String, String> filters, int maxRows) {
+    private static String buildSelectQuery(String tableName, Map<String, String> filters,
+                                          Map<String, Boolean> exactSearchFlags, int maxRows) {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT TOP ").append(maxRows).append(" * FROM ").append(tableName);
 
@@ -92,8 +93,17 @@ public class TableDataService {
                 String value = filter.getValue();
 
                 if (value != null && !value.trim().isEmpty()) {
-                    // Use LIKE for string matching
-                    conditions.add(column + " LIKE '%" + escapeSQL(value) + "%'");
+                    // Check if exact search is enabled for this column
+                    boolean isExact = exactSearchFlags != null &&
+                                     Boolean.TRUE.equals(exactSearchFlags.get(column));
+
+                    if (isExact) {
+                        // Exact match
+                        conditions.add(column + " = '" + escapeSQL(value) + "'");
+                    } else {
+                        // LIKE search (default)
+                        conditions.add(column + " LIKE '%" + escapeSQL(value) + "%'");
+                    }
                 }
             }
 

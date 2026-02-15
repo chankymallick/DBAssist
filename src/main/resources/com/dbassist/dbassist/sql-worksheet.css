@@ -1,0 +1,49 @@
+/* SQL Worksheet Syntax Highlighting - Light Theme */
+
+.code-area {
+    -fx-background-color: #ffffff;
+}
+
+.code-area .text {
+    -fx-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+.keyword {
+    -fx-fill: #0000ff;  /* Blue */
+    -fx-font-weight: bold;
+}
+
+.string {
+    -fx-fill: #d73a49;  /* Red for strings */
+    -fx-font-weight: bold;
+}
+
+.comment {
+    -fx-fill: #22863a;  /* Green */
+    -fx-font-style: italic;
+    -fx-font-weight: normal;
+}
+
+.number {
+    -fx-fill: #005cc5;  /* Dark blue for numbers */
+    -fx-font-weight: bold;
+}
+
+.code-area .paragraph-box:has-caret {
+    -fx-background-color: #f6f8fa;
+}
+
+.code-area .caret {
+    -fx-stroke: #000000;
+}
+
+.code-area .selection {
+    -fx-fill: #b3d4fc;
+}
+
+.code-area .line-number {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #6a737d;
+}
+

@@ -45,6 +45,32 @@ public class ConnectionManager {
     }
 
     /**
+     * Remove a connection by name
+     */
+    public void removeConnection(String connectionName) {
+        DatabaseConnection conn = getConnectionByName(connectionName);
+        if (conn != null) {
+            connections.remove(conn);
+            saveConnections();
+        }
+    }
+
+    /**
+     * Update an existing connection
+     */
+    public void updateConnection(String oldConnectionName, DatabaseConnection updatedConnection) {
+        // Find and remove old connection
+        DatabaseConnection oldConn = getConnectionByName(oldConnectionName);
+        if (oldConn != null) {
+            connections.remove(oldConn);
+        }
+
+        // Add updated connection
+        connections.add(updatedConnection);
+        saveConnections();
+    }
+
+    /**
      * Get all connections
      */
     public List<DatabaseConnection> getAllConnections() {

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DBAssistant - AI-Powered Database Explorer for SQL Server and Oracle. Modern, intuitive database management tool with advanced features.">
+    <meta name="keywords" content="database, SQL Server, Oracle, database explorer, SQL tool, database management, AI database">
+    <meta name="author" content="Masaddat Mallick">
+    <title>DBAssistant - AI-Powered Database Explorer</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #27ae60;
+            --dark-bg: #1a1a2e;
+            --light-bg: #f8f9fa;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --border-color: #e1e8ed;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-hover: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-bg) 100%);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        nav .logo-icon {
+            font-size: 2rem;
+        }
+
+        nav h1 {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        nav .subtitle {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        nav .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        .hero .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .features .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .screenshots .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .screenshot-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .screenshot-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .screenshot-caption {
+            padding: 1rem;
+            background: var(--light-bg);
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Download Section */
+        .download {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .download .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .download h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .download-options {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .download-card {
+            background: rgba(255,255,255,0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            min-width: 300px;
+            transition: all 0.3s;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+            background: white;
+        }
+
+        .download-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .download-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .download-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* System Requirements */
+        .requirements {
+            padding: 5rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .requirements .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .requirement-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .requirement-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .requirement-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .requirement-item li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .requirement-item li::before {
+            content: "✓";
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 2rem;
+            background: white;
+            text-align: center;
+        }
+
+        .contact .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.2);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            transition: all 0.3s;
+        }
+
+        .contact-details {
+            text-align: left;
+        }
+
+        .contact-details h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-details a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        footer .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        footer .social-links a {
+            color: white;
+            font-size: 1.8rem;
+            transition: all 0.3s;
+        }
+
+        footer .social-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.2rem;
+            }
+
+            .features-grid,
+            .screenshot-gallery,
+            .requirements-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Modal for Screenshots */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 5% auto;
+            max-width: 90%;
+            max-height: 80%;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--secondary-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Highlight */
+        .highlight {
+            background: linear-gradient(120deg, rgba(52, 152, 219, 0.2) 0%, rgba(52, 152, 219, 0.2) 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">🗄️</span>
+                <div>
+                    <h1>DBAssistant</h1>
+                    <div class="subtitle">AI-Powered Database Explorer</div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#screenshots">Screenshots</a></li>
+                <li><a href="#download">Download</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Your Ultimate Database Companion</h2>
+            <p class="tagline">Powerful. Intuitive. AI-Enhanced.</p>
+            <p>Explore SQL Server and Oracle databases with cutting-edge features including SQL worksheets, data comparison, and intelligent query assistance.</p>
+            <div class="cta-buttons">
+                <a href="#download" class="btn btn-primary">
+                    <span>⬇️</span> Download Now
+                </a>
+                <a href="#features" class="btn btn-secondary">
+                    <span>✨</span> Explore Features
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>SQL Worksheet</h3>
+                    <p>Advanced SQL editor with syntax highlighting, auto-completion for tables and columns, and automatic query persistence. Never lose your work!</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Smart Data Comparison</h3>
+                    <p>Compare data between tables or query results with intelligent row matching and visual difference highlighting. Perfect for data validation.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Advanced Filtering</h3>
+                    <p>Filter data on any column with exact or pattern matching. Apply multiple filters simultaneously for precise data exploration.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🗂️</div>
+                    <h3>Connection Management</h3>
+                    <p>Save and manage multiple database connections. Clone, edit, or switch between connections seamlessly with secure credential storage.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Modern Data Grid</h3>
+                    <p>Professional data grid with column selection, sorting, and search. Handle large datasets with pagination and efficient loading.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Export & Reports</h3>
+                    <p>Export comparison results to Excel, HTML, and other formats. Generate professional reports for data analysis and auditing.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Auto-Save Everything</h3>
+                    <p>All your work is automatically saved - queries, filters, column selections, and tab configurations. Resume exactly where you left off.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Professional UI</h3>
+                    <p>Clean, modern interface with custom title bar, intuitive navigation, and responsive design. Works great on any screen size.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>High Performance</h3>
+                    <p>Optimized for speed with async operations, caching, and efficient memory management. Handle large databases with ease.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section id="screenshots" class="screenshots">
+        <div class="container">
+            <h2 class="section-title">See It In Action</h2>
+            <div class="screenshot-gallery">
+                <div class="screenshot-item" onclick="openModal('UIScreenShots/Screenshot 2026-02-15 100701.png')">
+                    <img src="UIScreenShots/Screenshot 2026-02-15 100701.png" alt="Main Interface">
+                    <div class="screenshot-caption">Modern Home Screen</div>
+                </div>
+                <div class="screenshot-item" onclick="openModal('UIScreenShots/Screenshot 2026-02-15 100806.png')">
+                    <img src="UIScreenShots/Screenshot 2026-02-15 100806.png" alt="SQL Worksheet">
+                    <div class="screenshot-caption">SQL Worksheet with Syntax Highlighting</div>
+                </div>
+                <div class="screenshot-item" onclick="openModal('UIScreenShots/Screenshot 2026-02-15 100857.png')">
+                    <img src="UIScreenShots/Screenshot 2026-02-15 100857.png" alt="Data Grid">
+                    <div class="screenshot-caption">Advanced Data Grid with Filtering</div>
+                </div>
+                <div class="screenshot-item" onclick="openModal('UIScreenShots/Screenshot 2026-02-15 102222.png')">
+                    <img src="UIScreenShots/Screenshot 2026-02-15 102222.png" alt="Data Comparison">
+                    <div class="screenshot-caption">Smart Data Comparison</div>
+                </div>
+                <div class="screenshot-item" onclick="openModal('UIScreenShots/Screenshot 2026-02-15 102304.png')">
+                    <img src="UIScreenShots/Screenshot 2026-02-15 102304.png" alt="Connection Manager">
+                    <div class="screenshot-caption">Connection Management</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <h2>Download DBAssistant</h2>
+            <p style="font-size: 1.2rem; margin-top: 1rem;">Choose the best version for your needs</p>
+            <div class="download-options">
+                <div class="download-card">
+                    <h3>🪟 Windows Installer</h3>
+                    <p>Easy installation with Start Menu integration and automatic updates.</p>
+                    <a href="#" class="btn btn-primary">Download Setup (.exe)</a>
+                </div>
+                <div class="download-card">
+                    <h3>📦 Portable JAR</h3>
+                    <p>Standalone executable JAR file. Double-click to run on any platform.</p>
+                    <a href="#" class="btn btn-primary">Download JAR</a>
+                </div>
+                <div class="download-card">
+                    <h3>🐧 Linux Package</h3>
+                    <p>Shell script installer for Linux distributions. Includes launcher.</p>
+                    <a href="#" class="btn btn-primary">Download (.zip)</a>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.9;">
+                Latest Version: <span class="highlight">1.0.0</span> |
+                Released: <span class="highlight">February 2026</span> |
+                Size: <span class="highlight">~50 MB</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- System Requirements -->
+    <section class="requirements">
+        <div class="container">
+            <h2 class="section-title">System Requirements</h2>
+            <div class="requirements-grid">
+                <div class="requirement-item">
+                    <h4>🖥️ Operating System</h4>
+                    <ul>
+                        <li>Windows 10 or later</li>
+                        <li>Linux (Ubuntu 20.04+)</li>
+                        <li>macOS 10.15+</li>
+                    </ul>
+                </div>
+                <div class="requirement-item">
+                    <h4>☕ Java Runtime</h4>
+                    <ul>
+                        <li>Java 17 or higher</li>
+                        <li>JRE or JDK</li>
+                        <li>JavaFX included</li>
+                    </ul>
+                </div>
+                <div class="requirement-item">
+                    <h4>💻 Hardware</h4>
+                    <ul>
+                        <li>2 GB RAM minimum</li>
+                        <li>100 MB disk space</li>
+                        <li>1280x720 resolution</li>
+                    </ul>
+                </div>
+                <div class="requirement-item">
+                    <h4>🗄️ Database Support</h4>
+                    <ul>
+                        <li>SQL Server 2012+</li>
+                        <li>Oracle 11g+</li>
+                        <li>Network connectivity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p style="color: var(--text-light); font-size: 1.1rem;">Have questions, suggestions, or need support? We'd love to hear from you!</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-details">
+                        <h4>Email</h4>
+                        <a href="mailto:masaddat.mallick@gmail.com">masaddat.mallick@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">💻</div>
+                    <div class="contact-details">
+                        <h4>GitHub Repository</h4>
+                        <a href="https://github.com/masaddat" target="_blank">github.com/masaddat/DBAssistant</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📚</div>
+                    <div class="contact-details">
+                        <h4>Documentation</h4>
+                        <a href="#" target="_blank">View User Guide & API Docs</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🐛</div>
+                    <div class="contact-details">
+                        <h4>Report Issues</h4>
+                        <a href="https://github.com/masaddat/DBAssistant/issues" target="_blank">Submit Bug Reports or Feature Requests</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><strong>DBAssistant</strong> - AI-Powered Database Explorer</p>
+            <p>Developed by <strong>Masaddat Mallick</strong></p>
+            <p>Open Source Project | Licensed under MIT</p>
+            <div class="social-links">
+                <a href="https://github.com/masaddat" target="_blank" title="GitHub">🐙</a>
+                <a href="mailto:masaddat.mallick@gmail.com" title="Email">📧</a>
+                <a href="https://linkedin.com/in/masaddat" target="_blank" title="LinkedIn">💼</a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.6; font-size: 0.9rem;">
+                © 2026 DBAssistant. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Modal for full-size screenshots -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="modalImage" src="" alt="Full size screenshot">
+        </div>
+    </div>
+
+    <script>
+        // Screenshot modal functionality
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = imageSrc;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.feature-card, .screenshot-item, .download-card, .requirement-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

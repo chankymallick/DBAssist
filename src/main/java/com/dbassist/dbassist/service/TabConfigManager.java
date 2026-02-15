@@ -116,6 +116,20 @@ public class TabConfigManager {
             sb.append(encode(filters.toString()));
         }
 
+        sb.append("|");
+
+        // Serialize column visibility
+        if (config.getColumnVisibility().isEmpty()) {
+            sb.append("NOVISIBILITY");
+        } else {
+            StringBuilder visibility = new StringBuilder();
+            for (Map.Entry<String, Boolean> entry : config.getColumnVisibility().entrySet()) {
+                visibility.append(encode(entry.getKey())).append("=")
+                         .append(entry.getValue()).append(";");
+            }
+            sb.append(encode(visibility.toString()));
+        }
+
         return sb.toString();
     }
 
@@ -139,6 +153,22 @@ public class TabConfigManager {
                         String[] kv = pair.split("=");
                         if (kv.length == 2) {
                             config.addFilter(decode(kv[0]), decode(kv[1]));
+                        }
+                    }
+                }
+            }
+
+            // Deserialize column visibility (if present in data)
+            if (parts.length >= 6) {
+                String visibilityStr = decode(parts[5]);
+                if (!"NOVISIBILITY".equals(visibilityStr) && !visibilityStr.isEmpty()) {
+                    String[] visibilityPairs = visibilityStr.split(";");
+                    for (String pair : visibilityPairs) {
+                        if (!pair.isEmpty()) {
+                            String[] kv = pair.split("=");
+                            if (kv.length == 2) {
+                                config.setColumnVisible(decode(kv[0]), Boolean.parseBoolean(kv[1]));
+                            }
                         }
                     }
                 }

@@ -27,7 +27,7 @@
         <VBox spacing="0">
             <!-- Window Control Bar -->
             <HBox fx:id="titleBar" alignment="CENTER_LEFT" spacing="15.0"
-                  style="-fx-background-color: linear-gradient(to right, #1a252f, #2c3e50); -fx-padding: 8 15 8 15; -fx-cursor: hand;">
+                  style="-fx-background-color: linear-gradient(to right, #37474f, #455a64); -fx-padding: 8 15 8 15; -fx-cursor: hand;">
 
                 <!-- App Icon and Title -->
                 <HBox fx:id="iconContainer" alignment="CENTER_LEFT" spacing="10">
@@ -59,13 +59,15 @@
             </HBox>
 
             <!-- App Info Bar -->
-            <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #2c3e50; -fx-padding: 12 15 12 15;">
-                <Label text="Your AI-Powered Database Assistant" textFill="#ecf0f1" styleClass="app-subtitle">
+            <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #455a64; -fx-padding: 12 15 12 15;">
+                <Label text="Your AI-Powered Database Assistant" textFill="#cfd8dc" styleClass="app-subtitle">
                     <font>
                         <Font size="12.0"/>
                     </font>
                 </Label>
                 <Region HBox.hgrow="ALWAYS"/>
+                <Button text="⚖ Compare Tables" onAction="#onCompare" styleClass="header-button"
+                        style="-fx-background-color: #1976d2; -fx-text-fill: white; -fx-cursor: hand; -fx-font-size: 12px; -fx-padding: 8 15 8 15; -fx-background-radius: 4;"/>
                 <Button text="Settings" onAction="#onSettings" styleClass="header-button"
                         style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand; -fx-font-size: 12px; -fx-padding: 5 12 5 12;"/>
                 <Button text="About" onAction="#onAbout" styleClass="header-button"
@@ -79,20 +81,20 @@
         <SplitPane dividerPositions="0.2" style="-fx-background-color: #f5f7fa;">
 
             <!-- Left Panel - Connection Tree -->
-            <VBox style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-width: 0 1 0 0;"
+            <VBox style="-fx-background-color: #fafafa; -fx-border-color: #e0e0e0; -fx-border-width: 0 1 0 0;"
                   minWidth="250.0" prefWidth="250.0" maxWidth="350.0">
                 <!-- Left Panel Header -->
-                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #34495e; -fx-padding: 12 15;">
-                    <Label text="Connections" textFill="white" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #546e7a; -fx-padding: 12 15;">
+                    <Label text="Connections" textFill="white" style="-fx-font-size: 14px; -fx-font-weight: 600;"/>
                     <Region HBox.hgrow="ALWAYS"/>
                     <Button text="+" onAction="#onNewConnection"
-                            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 16px; -fx-cursor: hand; -fx-background-radius: 3; -fx-padding: 2 8;">
+                            style="-fx-background-color: #1976d2; -fx-text-fill: white; -fx-font-size: 16px; -fx-cursor: hand; -fx-background-radius: 3; -fx-padding: 2 8;">
                     </Button>
                 </HBox>
 
                 <!-- Search Filter for Tables -->
                 <TextField fx:id="treeSearchField" promptText="🔍 Search tables..."
-                           style="-fx-font-size: 12px; -fx-padding: 8; -fx-background-color: #ecf0f1; -fx-border-width: 0 0 1 0; -fx-border-color: #bdc3c7;">
+                           style="-fx-font-size: 12px; -fx-padding: 8; -fx-background-color: #ffffff; -fx-border-width: 0 0 1 0; -fx-border-color: #cfd8dc;">
                     <VBox.margin>
                         <Insets top="0" bottom="0" left="0" right="0"/>
                     </VBox.margin>
@@ -144,8 +146,8 @@
                               style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-padding: 30;"
                               prefWidth="340.0" prefHeight="200.0">
                             <Label text="🔌" style="-fx-font-size: 52px;"/>
-                            <Label text="New Connection" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-                            <Label text="Connect to a new database" wrapText="true" textAlignment="CENTER"
+                            <Label text="New Connection" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" alignment="CENTER"/>
+                            <Label text="Connect to a new database" wrapText="true" textAlignment="CENTER" alignment="CENTER"
                                    style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" maxWidth="280.0"/>
                             <Button fx:id="newConnectionButton" text="Get Started" onAction="#onNewConnection"
                                     prefWidth="150.0"
@@ -158,8 +160,8 @@
                               style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-padding: 30;"
                               prefWidth="340.0" prefHeight="200.0">
                             <Label text="📚" style="-fx-font-size: 52px;"/>
-                            <Label text="Recent Connections" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-                            <Label text="Access your saved connections" wrapText="true" textAlignment="CENTER"
+                            <Label text="Recent Connections" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" alignment="CENTER"/>
+                            <Label text="Access your saved connections" wrapText="true" textAlignment="CENTER" alignment="CENTER"
                                    style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" maxWidth="280.0"/>
                             <Button fx:id="recentConnectionsButton" text="View History" onAction="#onRecentConnections"
                                     prefWidth="150.0"
@@ -175,8 +177,8 @@
                               style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-padding: 30;"
                               prefWidth="340.0" prefHeight="200.0">
                             <Label text="🤖" style="-fx-font-size: 52px;"/>
-                            <Label text="AI Assistant" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-                            <Label text="Let AI help you query databases" wrapText="true" textAlignment="CENTER"
+                            <Label text="AI Assistant" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" alignment="CENTER"/>
+                            <Label text="Let AI help you query databases" wrapText="true" textAlignment="CENTER" alignment="CENTER"
                                    style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" maxWidth="280.0"/>
                             <Button text="Coming Soon" disable="true" prefWidth="150.0"
                                     style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5; -fx-padding: 10 20;">
@@ -188,8 +190,8 @@
                               style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-padding: 30;"
                               prefWidth="340.0" prefHeight="200.0">
                             <Label text="📖" style="-fx-font-size: 52px;"/>
-                            <Label text="Documentation" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-                            <Label text="Learn how to use DBAssist" wrapText="true" textAlignment="CENTER"
+                            <Label text="Documentation" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" alignment="CENTER"/>
+                            <Label text="Learn how to use DBAssist" wrapText="true" textAlignment="CENTER" alignment="CENTER"
                                    style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" maxWidth="280.0"/>
                             <Button text="Learn More" prefWidth="150.0"
                                     style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand; -fx-background-radius: 5; -fx-padding: 10 20;">
@@ -207,14 +209,27 @@
         </SplitPane>
     </center>
 
-    <!-- Footer -->
+    <!-- Footer with Progress Bar -->
     <bottom>
-        <HBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #ecf0f1; -fx-padding: 15;">
-            <Label text="DBAssist v1.0.0" style="-fx-text-fill: #7f8c8d; -fx-font-size: 11px;"/>
-            <Label text="•" style="-fx-text-fill: #7f8c8d;"/>
-            <Label text="Supports: MySQL, PostgreSQL, MongoDB, Oracle, SQL Server"
-                   style="-fx-text-fill: #7f8c8d; -fx-font-size: 11px;"/>
-        </HBox>
+        <VBox spacing="0">
+            <!-- Progress Bar (hidden by default) -->
+            <HBox fx:id="progressContainer" alignment="CENTER_LEFT" spacing="10"
+                  style="-fx-background-color: #fff3cd; -fx-padding: 8 15; -fx-border-color: #ffc107; -fx-border-width: 1 0 0 0;"
+                  managed="false" visible="false">
+                <Label fx:id="progressLabel" text="Loading..."
+                       style="-fx-text-fill: #856404; -fx-font-size: 12px; -fx-font-weight: 600;"/>
+                <javafx.scene.control.ProgressBar fx:id="progressBar" prefWidth="200"
+                                                   style="-fx-accent: #ffc107;"/>
+            </HBox>
+
+            <!-- Footer Info -->
+            <HBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #ecf0f1; -fx-padding: 15;">
+                <Label text="DBAssist v1.0.0" style="-fx-text-fill: #7f8c8d; -fx-font-size: 11px;"/>
+                <Label text="•" style="-fx-text-fill: #7f8c8d;"/>
+                <Label text="Supports: MySQL, PostgreSQL, MongoDB, Oracle, SQL Server"
+                       style="-fx-text-fill: #7f8c8d; -fx-font-size: 11px;"/>
+            </HBox>
+        </VBox>
     </bottom>
 
 </BorderPane>

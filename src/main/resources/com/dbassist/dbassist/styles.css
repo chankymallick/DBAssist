@@ -121,55 +121,57 @@
     -fx-cursor: default;
 }
 
-/* TreeView Styles */
+/* TreeView Styles - Professional Grey/Blue Theme */
 .tree-view {
-    -fx-background-color: white;
+    -fx-background-color: #fafafa;
     -fx-border-color: transparent;
-    -fx-padding: 8;
+    -fx-padding: 10;
 }
 
 .tree-view .tree-cell {
-    -fx-background-color: white;
-    -fx-text-fill: #2c3e50;
-    -fx-padding: 8 5 8 5;
+    -fx-background-color: transparent;
+    -fx-text-fill: #37474f;
+    -fx-padding: 10 8 10 8;
     -fx-font-size: 13px;
+    -fx-font-weight: 600;
     -fx-border-width: 0;
 }
 
 .tree-view .tree-cell:filled:selected {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
+    -fx-background-color: #e3f2fd;
+    -fx-text-fill: #1565c0;
     -fx-background-radius: 4;
 }
 
 .tree-view .tree-cell:filled:selected:focused {
-    -fx-background-color: #2980b9;
-    -fx-text-fill: white;
+    -fx-background-color: #bbdefb;
+    -fx-text-fill: #0d47a1;
 }
 
 .tree-view .tree-cell:filled:hover {
-    -fx-background-color: #ecf0f1;
+    -fx-background-color: #f5f5f5;
     -fx-background-radius: 4;
 }
 
 .tree-view .tree-cell:filled:selected:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: #bbdefb;
 }
 
 .tree-view .tree-cell .tree-disclosure-node {
     -fx-background-color: transparent;
+    -fx-padding: 4 4 4 0;
 }
 
 .tree-view .tree-cell:expanded .tree-disclosure-node .arrow {
-    -fx-background-color: #3498db;
+    -fx-background-color: #546e7a;
 }
 
 .tree-view .tree-cell:collapsed .tree-disclosure-node .arrow {
-    -fx-background-color: #7f8c8d;
+    -fx-background-color: #90a4ae;
 }
 
 .tree-view .tree-cell .arrow {
-    -fx-background-color: #7f8c8d;
+    -fx-background-color: #90a4ae;
     -fx-padding: 4;
     -fx-shape: "M 0 0 L 4 4 L 0 8 Z";
 }
@@ -178,14 +180,14 @@
     -fx-background-color: transparent;
 }
 
-/* Tree cell text for different levels */
+/* Root level connections - More prominent */
 .tree-view .tree-cell:filled {
-    -fx-font-weight: normal;
+    -fx-font-weight: 600;
 }
 
-/* Root level connections - bold */
-.tree-view > .tree-cell:filled {
-    -fx-font-weight: bold;
+/* Ensure proper text rendering */
+.tree-view .tree-cell .text {
+    -fx-font-smoothing-type: lcd;
 }
 
 /* SplitPane Styles */

@@ -37,70 +37,70 @@ public class ConnectionTreeCellFactory implements Callback<TreeView<String>, Tre
 
                 FontIcon icon = null;
 
-                // Database connection items (parent level)
+                // Database connection items (parent level) - Blue-grey
                 if (getTreeItem() != null && getTreeItem().getParent() != null
                     && getTreeItem().getParent().getValue() != null
                     && getTreeItem().getParent().getValue().equals("All Connections")) {
                     icon = new FontIcon(FontAwesomeSolid.DATABASE);
-                    icon.setIconColor(Color.web("#3498db"));
+                    icon.setIconColor(Color.web("#546e7a")); // Blue-grey 600
                     icon.setIconSize(14);
                 }
-                // Tables node
+                // Tables node - Grey
                 else if (item.equals("Tables")) {
                     icon = new FontIcon(FontAwesomeSolid.TABLE);
-                    icon.setIconColor(Color.web("#27ae60"));
+                    icon.setIconColor(Color.web("#757575")); // Grey 600
                     icon.setIconSize(13);
                 }
-                // Individual table items (children of Tables node)
+                // Individual table items - Lighter grey
                 else if (getTreeItem() != null && getTreeItem().getParent() != null
                     && "Tables".equals(getTreeItem().getParent().getValue())) {
                     icon = new FontIcon(FontAwesomeSolid.TABLE);
-                    icon.setIconColor(Color.web("#16a085"));
+                    icon.setIconColor(Color.web("#9e9e9e")); // Grey 500
                     icon.setIconSize(12);
                 }
-                // Views node
+                // Views node - Blue-grey
                 else if (item.equals("Views")) {
                     icon = new FontIcon(FontAwesomeSolid.EYE);
-                    icon.setIconColor(Color.web("#9b59b6"));
+                    icon.setIconColor(Color.web("#607d8b")); // Blue-grey 500
                     icon.setIconSize(13);
                 }
                 // Individual view items
                 else if (getTreeItem() != null && getTreeItem().getParent() != null
                     && "Views".equals(getTreeItem().getParent().getValue())) {
                     icon = new FontIcon(FontAwesomeSolid.EYE);
-                    icon.setIconColor(Color.web("#8e44ad"));
+                    icon.setIconColor(Color.web("#90a4ae")); // Blue-grey 300
                     icon.setIconSize(12);
                 }
-                // Stored Procedures node
+                // Stored Procedures node - Steel blue
                 else if (item.contains("Procedures") || item.contains("Stored Procedures")) {
                     icon = new FontIcon(FontAwesomeSolid.COG);
-                    icon.setIconColor(Color.web("#e67e22"));
+                    icon.setIconColor(Color.web("#78909c")); // Blue-grey 400
                     icon.setIconSize(13);
                 }
                 // Individual procedure items
                 else if (getTreeItem() != null && getTreeItem().getParent() != null
                     && "Stored Procedures".equals(getTreeItem().getParent().getValue())) {
                     icon = new FontIcon(FontAwesomeSolid.COG);
-                    icon.setIconColor(Color.web("#d35400"));
+                    icon.setIconColor(Color.web("#90a4ae")); // Blue-grey 300
                     icon.setIconSize(12);
                 }
-                // Functions node
+                // Functions node - Slate grey
                 else if (item.equals("Functions")) {
                     icon = new FontIcon(FontAwesomeSolid.WRENCH);
-                    icon.setIconColor(Color.web("#e74c3c"));
+                    icon.setIconColor(Color.web("#607d8b")); // Blue-grey 500
                     icon.setIconSize(13);
                 }
                 // Individual function items
                 else if (getTreeItem() != null && getTreeItem().getParent() != null
                     && "Functions".equals(getTreeItem().getParent().getValue())) {
                     icon = new FontIcon(FontAwesomeSolid.WRENCH);
-                    icon.setIconColor(Color.web("#c0392b"));
+                    icon.setIconColor(Color.web("#90a4ae")); // Blue-grey 300
                     icon.setIconSize(12);
                 }
-                // Column items (children of table items)
+                // Column items - Soft blue
                 else if (item.contains("(") && item.contains(")")) {
                     icon = new FontIcon(FontAwesomeSolid.COLUMNS);
-                    icon.setIconColor(Color.web("#3498db"));
+                    icon.setIconColor(Color.web("#90caf9")); // Light blue 300
                     icon.setIconSize(11);
                 }
 
